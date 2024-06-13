@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{book.title}}</title>
+<style>
+
+    h1 {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #333;
+    }
+
+
+    table {
+    width: 50%;
+    border-collapse: collapse;
+    top: 100px;
+    position: relative;
+    left: 500px;
+    }
+
+    th {
+        background-color: #ff5900;
+        color: #fff;
+        padding: 8px;
+        text-align: left;
+    }
+
+    td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd; 
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+
+    a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+        position: relative;
+        top: 200px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+</style>
+</head>
+<body>
+    <h1>{{book.title}}</h1>
+    <table border="1">
+    <tr>
+        <th>Author:</th>
+        <th>Published_date:</th>
+    </tr>
+    <tr>
+        <td>{{book.author}}</td>
+        <td>{{book.published_date}}</td>
+    </tr>
+    </table>
+    <a href="{% url 'book_list' %}">Back to List</a>
+</body>
+</html>

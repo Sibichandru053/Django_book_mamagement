@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+</head>
+<style>
+    h1{
+        text-align: center;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
+    #addbook{  
+        color: #007bff; 
+        text-decoration: none; 
+        display:flex;
+        justify-content: end;
+    }
+
+    #addbook:hover {
+    text-decoration: underline; 
+    }
+
+
+    a{  
+        color: #007bff; 
+        text-decoration: none; 
+        margin-right: 10px;
+    }
+
+    a:hover {
+    text-decoration: underline; 
+    }
+
+    button {
+        background-color: #dc3545;
+        color: #fff; 
+        border: none;
+        padding: 5px 10px; 
+        cursor: pointer; 
+    }
+
+    button:hover {
+        background-color: #c82333; 
+    }
+
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    top: 10px;
+    position: relative;
+    }
+
+    th {
+        background-color: #ff5900;
+        color: #fff;
+        padding: 8px;
+        text-align: left;
+    }
+
+    td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd; 
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    #toaster {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #31b107;
+        color: #000000;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+    }
+
+    #toaster.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+    }
+
+    @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+    }
+
+    @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+    }
+
+    @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+    }
+</style>
+<body>
+    <h1>Book List</h1>
+    <a href="{% url 'book_create' %}" id="addbook">Add Book</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td><a href="{% url 'book_detail' book.pk %}">{{book.title}}</a></td>
+                <td>{{book.author}}</td>
+                <td><a href="{% url 'book_update' book.pk %}">Edit</a></td>
+                <td>
+                    <form method="post" action="{% url 'book_delete' book.pk %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="toast()">Delete</button>
+                        <div id="toaster">Data deleted successfully!!!!</div>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<script>
+    function toast() {
+    var x = document.getElementById("toaster");
+    x.className = "show";
+    }
+</script>
+</html>
